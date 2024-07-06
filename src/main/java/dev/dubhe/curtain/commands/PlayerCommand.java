@@ -47,9 +47,9 @@ import static net.minecraft.command.ISuggestionProvider.suggest;
 
 public class PlayerCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        final String[] gamemodes = (String[]) Arrays.stream(GameType.values())
+        final String[] gamemodes = Arrays.stream(GameType.values())
                 .map(GameType::getName)
-                .toArray();
+                .toArray(String[]::new);
         LiteralArgumentBuilder<CommandSource> builder = literal("player")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandPlayer))
                 .then(argument("player", StringArgumentType.word())
