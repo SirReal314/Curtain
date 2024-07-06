@@ -35,7 +35,7 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof PlayerEntity) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getPlayer());
+        FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getPlayer());
     }
 
     // 工具缺失修复(missingTools)
