@@ -34,8 +34,8 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayerEntity player) {
-            String playerName = player.getName().getString();
+        if (event.getEntity() instanceof ServerPlayerEntity) {
+            String playerName = event.getEntity().getName().getString();
             if (CurtainRules.defaultLoggers.contentEquals("none")) {
                 return;
             }
@@ -48,8 +48,8 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof ServerPlayerEntity player) {
-            String playerName = player.getName().getString();
+        if (event.getPlayer() instanceof ServerPlayerEntity) {
+            String playerName = event.getPlayer().getName().getString();
             LoggerManager.unsubscribeAllLogger(playerName);
         }
     }

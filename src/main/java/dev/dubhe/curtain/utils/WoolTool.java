@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,8 +22,8 @@ public class WoolTool {
      * A map of the {@link MaterialColor} to the {@link DyeColor} which is used in {@link WoolTool#getWoolColorAtPosition}
      * to get the colour of wool at a position.
      */
-    private static final Map<MaterialColor, DyeColor> Material2Dye = Arrays.stream(DyeColor.values())
-            .collect(Collectors.toUnmodifiableMap(DyeColor::getMaterialColor, Function.identity()));
+    private static final Map<MaterialColor, DyeColor> Material2Dye = Collections.unmodifiableMap(Arrays.stream(DyeColor.values())
+            .collect(Collectors.toMap(DyeColor::getMaterialColor, Function.identity())));
 
     /**
      * Gets the colour of wool at the position, for hoppers to be able to decide whether to add their items to the global counter.

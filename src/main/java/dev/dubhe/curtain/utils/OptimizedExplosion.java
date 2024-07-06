@@ -163,8 +163,8 @@ public class OptimizedExplosion {
 
                         entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
 
-                        if (entity instanceof PlayerEntity player) {
-
+                        if (entity instanceof PlayerEntity) {
+                            PlayerEntity player = (PlayerEntity) entity;
                             if (!player.isSpectator()
                                     && (!player.isCreative() || !player.abilities.flying)) {  //getAbilities
                                 e.getHitPlayers().put(player, new Vector3d(d5 * d10, d7 * d10, d9 * d10));
@@ -220,7 +220,7 @@ public class OptimizedExplosion {
                 Block block = state.getBlock();
 
                 if (state.getMaterial() != Material.AIR) {
-                    if (block.dropFromExplosion(e) && world instanceof ServerWorld serverLevel) {
+                    if (block.dropFromExplosion(e) && world instanceof ServerWorld) {
                         TileEntity blockEntity = state.hasTileEntity() ? world.getBlockEntity(blockpos) : null;  //hasBlockEntity()
 
                         LootContext.Builder lootBuilder = (new LootContext.Builder((ServerWorld) eAccess.getLevel()))
@@ -233,7 +233,7 @@ public class OptimizedExplosion {
                         if (eAccess.getBlockInteraction() == Explosion.Mode.DESTROY)
                             lootBuilder.withParameter(LootParameters.EXPLOSION_RADIUS, eAccess.getRadius());
 
-                        state.spawnAfterBreak(serverLevel, blockpos, ItemStack.EMPTY);
+                        state.spawnAfterBreak((ServerWorld) world, blockpos, ItemStack.EMPTY);
 
                         state.getDrops(lootBuilder).forEach((itemStackx) -> {
                             method_24023(objectArrayList, itemStackx, blockpos.immutable());

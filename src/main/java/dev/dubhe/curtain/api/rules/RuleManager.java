@@ -87,22 +87,22 @@ public class RuleManager {
         for (String name : defaultRuleMap.keySet()) {
             CurtainRule<?> rule = defaultRuleMap.get(name);
             Object value = rule.getValue();
-            if (value instanceof String str)
-                object.addProperty(name, str);
-            else if (value instanceof Boolean bool)
-                object.addProperty(name, bool);
-            else if (value instanceof Byte num)
-                object.addProperty(name, num);
-            else if (value instanceof Short num)
-                object.addProperty(name, num);
-            else if (value instanceof Integer num)
-                object.addProperty(name, num);
-            else if (value instanceof Long num)
-                object.addProperty(name, num);
-            else if (value instanceof Float num)
-                object.addProperty(name, num);
-            else if (value instanceof Double num)
-                object.addProperty(name, num);
+            if (value instanceof String)
+                object.addProperty(name, (String)value);
+            else if (value instanceof Boolean)
+                object.addProperty(name, (Boolean)value);
+            else if (value instanceof Byte)
+                object.addProperty(name, (Byte)value);
+            else if (value instanceof Short)
+                object.addProperty(name, (Short)value);
+            else if (value instanceof Integer)
+                object.addProperty(name, (Integer)value);
+            else if (value instanceof Long)
+                object.addProperty(name, (Long)value);
+            else if (value instanceof Float)
+                object.addProperty(name, (Float)value);
+            else if (value instanceof Double)
+                object.addProperty(name, (Double)value);
             else
                 throw RuleException.type();
         }

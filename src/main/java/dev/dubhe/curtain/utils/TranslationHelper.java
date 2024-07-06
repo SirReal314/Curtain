@@ -33,7 +33,7 @@ public class TranslationHelper {
      */
     public static @Nonnull IFormattableTextComponent translate(String key, TextFormatting formatting, Style style, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new StringTextComponent(trans.getOrDefault(key, key).formatted(args)).withStyle(style).withStyle(formatting);
+        return new StringTextComponent(String.format(trans.getOrDefault(key, key), args)).withStyle(style).withStyle(formatting);
     }
 
     /**
@@ -45,7 +45,7 @@ public class TranslationHelper {
      */
     public static @Nonnull IFormattableTextComponent translate(String key, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new StringTextComponent(trans.getOrDefault(key, key).formatted(args));
+        return new StringTextComponent(String.format(trans.getOrDefault(key, key), args));
     }
 
     /**
@@ -82,7 +82,7 @@ public class TranslationHelper {
                     StandardCharsets.UTF_8);
             stream.close();
         } catch (NullPointerException | IOException e) {
-            return Map.of();
+            return new HashMap<>();
         }
         return GSON.fromJson(dataJSON, new TypeToken<Map<String, String>>() {
         }.getType());

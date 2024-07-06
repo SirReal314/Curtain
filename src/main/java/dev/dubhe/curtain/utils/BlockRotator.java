@@ -194,21 +194,27 @@ public class BlockRotator {
             if ((facing == Direction.UP && hitVec.y == 1.0f) || (facing == Direction.DOWN && hitVec.y == 0.0f)) {
                 newState = state.setValue(StairsBlock.HALF, state.getValue(StairsBlock.HALF) == Half.TOP ? Half.BOTTOM : Half.TOP);
             } else {
-                boolean turnCounterClockwise = switch (facing) {
-                    case NORTH -> (hitVec.x <= 0.5);
-                    case SOUTH -> !(hitVec.x <= 0.5);
-                    case EAST -> (hitVec.z <= 0.5);
-                    case WEST -> !(hitVec.z <= 0.5);
-                    default -> false;
+                boolean turnCounterClockwise;
+                switch (facing) {
+                    case NORTH:
+                        turnCounterClockwise = (hitVec.x <= 0.5);
+                        break;
+                    case SOUTH:
+                        turnCounterClockwise = !(hitVec.x <= 0.5);
+                        break;
+                    case EAST:
+                        turnCounterClockwise = (hitVec.z <= 0.5);
+                        break;
+                    case WEST:
+                        turnCounterClockwise = !(hitVec.z <= 0.5);
+                        break;
+                    default:
+                        turnCounterClockwise = false;
                 };
                 newState = state.rotate(turnCounterClockwise ? Rotation.COUNTERCLOCKWISE_90 : Rotation.CLOCKWISE_90);
             }
         } else if (block instanceof RotatedPillarBlock) {
-            newState = state.setValue(RotatedPillarBlock.AXIS, switch (state.getValue(RotatedPillarBlock.AXIS)) {
-                case X -> Direction.Axis.Z;
-                case Y -> Direction.Axis.X;
-                case Z -> Direction.Axis.Y;
-            });
+            newState = state.setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS));
         }
         if (newState != null) {
             world.setBlock(pos, newState, 2 | 1024); // no constant matching 1024 in Block, what does this do?
@@ -224,7 +230,7 @@ public class BlockRotator {
     }
 
     public static boolean flippinEligibility(Entity entity) {
-        return CurtainRules.flippingCactus && entity instanceof PlayerEntity p && p.getOffhandItem().getItem() == Items.CACTUS;
+        return CurtainRules.flippingCactus && entity instanceof PlayerEntity && ((PlayerEntity)entity).getOffhandItem().getItem() == Items.CACTUS;
     }
 
     public static class CactusDispenserBehaviour extends OptionalDispenseBehavior implements IDispenseItemBehavior {

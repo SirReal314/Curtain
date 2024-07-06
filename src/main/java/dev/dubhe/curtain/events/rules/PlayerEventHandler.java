@@ -21,23 +21,21 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
         if (CurtainRules.openFakePlayerInventory &&
-                playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
-                serverPlayer instanceof EntityPlayerMPFake &&
-                serverPlayer.isAlive()
+                playerTickEvent.player instanceof EntityPlayerMPFake &&
+                playerTickEvent.player.isAlive()
         ) {
-            FAKE_PLAYER_INVENTORY_MENU_MAP.get(serverPlayer).tick();
+            FAKE_PLAYER_INVENTORY_MENU_MAP.get(playerTickEvent.player).tick();
         }
     }
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof PlayerEntity player)
-            FAKE_PLAYER_INVENTORY_MENU_MAP.put(player, new FakePlayerInventoryMenu(player));
+        FAKE_PLAYER_INVENTORY_MENU_MAP.put(event.getPlayer(), new FakePlayerInventoryMenu(event.getPlayer()));
     }
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof PlayerEntity player) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
+        if (event.getEntity() instanceof PlayerEntity) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getPlayer());
     }
 
     // 工具缺失修复(missingTools)
@@ -52,16 +50,14 @@ public class PlayerEventHandler {
     // 假人补货(fakePlayerAutoReplenishment)
     @SubscribeEvent
     public void onUse(ItemStackEvent.Use event) {
-        if (CurtainRules.fakePlayerAutoReplenishment && event.getPlayer() instanceof EntityPlayerMPFake fakePlayer) {
-            FakePlayerAutoReplenishment.autoReplenishment(fakePlayer);
-        }
+        if (CurtainRules.fakePlayerAutoReplenishment && event.getPlayer() instanceof EntityPlayerMPFake)
+            FakePlayerAutoReplenishment.autoReplenishment(event.getPlayer());
     }
 
     // 假人补货(fakePlayerAutoReplenishment)
     @SubscribeEvent
     public void onHurtAndBreak(ItemStackEvent.HurtAndBreak event) {
-        if (CurtainRules.fakePlayerAutoReplaceTool && event.getPlayer() instanceof EntityPlayerMPFake fakePlayer) {
-            FakePlayerAutoReplaceTool.autoReplaceTool(fakePlayer);
-        }
+        if (CurtainRules.fakePlayerAutoReplaceTool && event.getPlayer() instanceof EntityPlayerMPFake)
+            FakePlayerAutoReplaceTool.autoReplaceTool(event.getPlayer());
     }
 }
