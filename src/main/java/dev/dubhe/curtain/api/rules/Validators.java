@@ -1,6 +1,5 @@
 package dev.dubhe.curtain.api.rules;
 
-import com.ibm.icu.impl.UResource;
 import dev.dubhe.curtain.utils.CommandHelper;
 import net.minecraft.command.CommandSource;
 
