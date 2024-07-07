@@ -49,8 +49,7 @@ public class PlayerCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         final String[] gamemodes = Arrays.stream(GameType.values())
                 .map(GameType::getName)
-                .toList()
-                .toArray(new String[]{});
+                .toArray(String[]::new);
         LiteralArgumentBuilder<CommandSource> builder = literal("player")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandPlayer))
                 .then(argument("player", StringArgumentType.word())

@@ -27,14 +27,17 @@ public abstract class PistonMovingBlockEntityMixin {
 
     @Inject(method = "moveEntityByPiston", at = @At("HEAD"), cancellable = true)
     private static void dontPushSpectators(Direction direction, Entity entity, double d, Direction direction2, CallbackInfo ci) {
-        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
-            ci.cancel();
-        }
+        if(!CurtainRules.creativeNoClip) return;
+        if(!(entity instanceof PlayerEntity)) return;
+        PlayerEntity player = (PlayerEntity)entity;
+        if(!player.isCreative()) return;
+        if(!player.abilities.flying) return;
+        ci.cancel();
     }
 
     @Redirect(method = "moveCollidedEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDeltaMovement(DDD)V"))
     private void ignoreAccel(Entity entity, double x, double y, double z) {
-        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
+        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity && ((PlayerEntity)entity).isCreative() && ((PlayerEntity)entity).abilities.flying) {
             return;
         }
         entity.setDeltaMovement(x, y, z);
@@ -50,16 +53,10 @@ public abstract class PistonMovingBlockEntityMixin {
     private PushReaction moveFakePlayers(Entity entity) {
         if (entity instanceof EntityPlayerMPFake && movedState.is(Blocks.SLIME_BLOCK)) {
             Vector3d vec3d = entity.getDeltaMovement();
-            double x = vec3d.x;
-            double y = vec3d.y;
-            double z = vec3d.z;
             Direction direction = getMovementDirection();
-            switch (direction.getAxis()) {
-                case X -> x = direction.getStepX();
-                case Y -> y = direction.getStepY();
-                case Z -> z = direction.getStepZ();
-            }
-
+            double x = direction.getAxis() == Direction.Axis.X ? direction.getStepX() : vec3d.x;
+            double y = direction.getAxis() == Direction.Axis.Y ? direction.getStepY() : vec3d.y;
+            double z = direction.getAxis() == Direction.Axis.Z ? direction.getStepZ() : vec3d.z;
             entity.setDeltaMovement(x, y, z);
         }
         return entity.getPistonPushReaction();

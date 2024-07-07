@@ -85,7 +85,7 @@ public class LoggerManager {
 
         ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage((new StringTextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
+            player.sendMessage((new StringTextComponent(String.format("%s subscribed logger %s", playerName, loggerName))
                     .withStyle(TextFormatting.GRAY)), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
@@ -117,7 +117,7 @@ public class LoggerManager {
 
         ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage(new StringTextComponent("%s unsubscribed logger %s".formatted(playerName, loggerName))
+            player.sendMessage(new StringTextComponent(String.format("%s unsubscribed logger %s", playerName, loggerName))
                     .withStyle(TextFormatting.GRAY), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
