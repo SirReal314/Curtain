@@ -13,10 +13,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
 
 public class PlayerEventHandler {
     // 假人背包(openFakePlayerInventory)
+    public static final AtomicBoolean shouldExecute = new AtomicBoolean(true);
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
         if (CurtainRules.openFakePlayerInventory &&
@@ -35,8 +38,13 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getEntity());
+        if (!shouldExecute.get()) return;
+
+        if (event.getEntity() instanceof EntityPlayerMPFake) {
+            FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getEntity());
+        } else shouldExecute.set(false);
     }
+
 
     // 工具缺失修复(missingTools)
     @SubscribeEvent

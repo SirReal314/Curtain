@@ -1,6 +1,7 @@
 package dev.dubhe.curtain.events.utils;
 
 import dev.dubhe.curtain.CurtainRules;
+import dev.dubhe.curtain.events.rules.PlayerEventHandler;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.features.player.helpers.FakePlayerResident;
 import net.minecraft.server.level.ServerPlayer;
@@ -10,11 +11,16 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class ServerEventHandler {
+
     private int timer = 0;
+    public static final ReentrantLock lock = new ReentrantLock();
 
     @SubscribeEvent
     public void onServerStart(ServerStartedEvent event) {
+        PlayerEventHandler.shouldExecute.set(true);
         if (!event.getServer().isSingleplayer()) FakePlayerResident.onServerStart(event.getServer());
     }
 
