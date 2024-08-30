@@ -33,6 +33,8 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        // 如果新玩家加入时, 重置状态, 使假人退出能正常更新 HashMap
+        if (!(event.getEntity() instanceof EntityPlayerMPFake)) shouldExecute.set(true);
         FAKE_PLAYER_INVENTORY_MENU_MAP.put(event.getEntity(), new FakePlayerInventoryMenu(event.getEntity()));
     }
 
