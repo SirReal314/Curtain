@@ -53,7 +53,8 @@
     "rules.turtle_egg_trampled_disabled.TurtleEggBlockMixin",
     "rules.xp_from_explosions.ExplosionMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
-    "rules.xp_no_cooldown.PlayerMixin"
+    "rules.xp_no_cooldown.PlayerMixin",
+    "rules.wither_rose_block.WitherRoseBlockMixin"
   ],
   "client": [
     "rules.creative_no_clip.client.LevelRendererMixin"

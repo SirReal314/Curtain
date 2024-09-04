@@ -1,9 +1,11 @@
 package dev.dubhe.curtain.features.player.helpers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.dubhe.curtain.CurtainRules;
+import dev.dubhe.curtain.events.rules.PlayerEventHandler;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -34,19 +36,20 @@ public class FakePlayerResident {
                 fakePlayerList.add(username, FakePlayerResident.save(player));
             });
             File file = server.getWorldPath(LevelResource.ROOT).resolve("fake_player.gca.json").toFile();
-            if (!file.isFile()) {
+            if (!file.exists()) {
                 try {
                     file.createNewFile();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
             try (BufferedWriter bfw = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
-                bfw.write(new Gson().toJson(fakePlayerList));
+                bfw.write(new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(fakePlayerList));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        PlayerEventHandler.shouldExecute.set(false);
         FAKE_PLAYER_INVENTORY_MENU_MAP.clear();
     }
 
