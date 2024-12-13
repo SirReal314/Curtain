@@ -385,4 +385,9 @@ public class CurtainRules {
             categories = SURVIVAL
     )
     public static boolean betterSignEditing = false;
+
+    @Rule(
+            categories = BUGFIX
+    )
+    public static boolean updateSuppressionCrashFix = false;
 }
