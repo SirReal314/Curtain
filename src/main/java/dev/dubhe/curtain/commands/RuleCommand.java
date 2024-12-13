@@ -1,5 +1,6 @@
 package dev.dubhe.curtain.commands;
 
+import net.minecraft.network.chat.Component;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.ArgumentBuilder;
