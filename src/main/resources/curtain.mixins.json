@@ -51,6 +51,8 @@
     "rules.super_lead.MobMixin",
     "rules.turtle_egg_trampled_disabled.RemoveBlockGoalMixin",
     "rules.turtle_egg_trampled_disabled.TurtleEggBlockMixin",
+    "rules.update_suppression_crash_fix.LevelMixin",
+    "rules.update_suppression_crash_fix.ServerPlayerMixin",
     "rules.xp_from_explosions.ExplosionMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
     "rules.xp_no_cooldown.PlayerMixin"
