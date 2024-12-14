@@ -4,13 +4,18 @@ import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.IValidator;
 import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validators;
+import dev.dubhe.curtain.events.utils.ServerEventHandler;
 import dev.dubhe.curtain.utils.TranslationHelper;
+import dev.dubhe.curtain.mixins.rules.instant_block_updater_reintroduced.LevelAccessor;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.redstone.CollectingNeighborUpdater;
+import net.minecraft.world.level.redstone.InstantNeighborUpdater;
 
 import static dev.dubhe.curtain.api.rules.Categories.*;
 
@@ -31,7 +36,7 @@ public class CurtainRules {
             validators = LanguageValidator.class,
             suggestions = {"zh_cn", "en_us"}
     )
-    public static String language = "zh_cn";
+    public static String language = "en_us";
 
     public static class ViewDistanceValidator implements IValidator<Integer> {
         @Override
@@ -385,4 +390,34 @@ public class CurtainRules {
             categories = SURVIVAL
     )
     public static boolean betterSignEditing = false;
+
+    @Rule(
+            categories = BUGFIX,
+            suggestions = {"true", "false"}
+    )
+    public static boolean updateSuppressionCrashFix = false;
+
+    @Rule(
+            categories = FEATURE,
+            validators = reIntroduceInstantBlockUpdatesValidator.class,
+            suggestions = {"true", "false"}
+    )
+    public static Boolean reIntroduceInstantBlockUpdates = false;
+
+    public static class reIntroduceInstantBlockUpdatesValidator implements IValidator<Boolean> {
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Boolean> currentRule, String newValue) {
+            if (source != null && ServerEventHandler.areWorldsLoaded) {
+                for (ServerLevel level : source.getServer().getAllLevels()) {
+                    ((LevelAccessor) level).setNeighborUpdater(newValue.equals("true") ?
+                            new InstantNeighborUpdater(level) : // Instant
+                            new CollectingNeighborUpdater(level, source.getServer().getMaxChainedNeighborUpdates())
+                    );
+                }
+            } else {
+                ServerEventHandler.ruleScheduler.addRule(this, currentRule, newValue);
+            }
+            return true;
+        }
+    }
 }
