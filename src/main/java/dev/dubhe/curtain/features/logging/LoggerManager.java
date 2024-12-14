@@ -109,7 +109,7 @@ public class LoggerManager {
         MinecraftServer server = Curtain.minecraftServer;
         ServerPlayer player = server.getPlayerList().getPlayerByName(playerName);
         server.getCommands().performPrefixedCommand(new CommandSourceStack(player, player.position(), player.getRotationVector(), player.getLevel(), 4,
-                "", Component.literal("Server"), server, null).withSuppressedOutput(),log);
+                "", Component.literal("Server"), server, player).withSuppressedOutput(),log);
     }
 
     public static void unsubscribeLogger(String playerName, String loggerName) {
