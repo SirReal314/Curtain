@@ -41,9 +41,6 @@ public class RuleScheduler {
     }
 
     public void loadRules(MinecraftServer server) {
-        System.console().printf("FFFFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCCCCCKKKKKKKKKK\n");
-        System.console().printf("%s\n", scheduledRuleChanges.size());
-//        System.console().printf("%s\n", scheduledRuleChanges.get(0).validator);
         for (RuleChange<?> ruleChange : scheduledRuleChanges)
             ruleChange.triggerValidator(server);
         scheduledRuleChanges.clear();

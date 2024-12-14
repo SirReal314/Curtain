@@ -22,8 +22,8 @@ public class ServerEventHandler {
     public void onServerStart(ServerStartedEvent event) {
         minecraftServer = event.getServer();
         if (!event.getServer().isSingleplayer()) FakePlayerResident.onServerStart(event.getServer());
-        ruleScheduler.loadRules(minecraftServer);
         areWorldsLoaded = true;
+        ruleScheduler.loadRules(minecraftServer);
     }
 
     @SubscribeEvent

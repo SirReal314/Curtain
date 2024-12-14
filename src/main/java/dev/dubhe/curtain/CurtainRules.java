@@ -415,7 +415,7 @@ public class CurtainRules {
                     );
                 }
             } else {
-//                ServerEventHandler.ruleScheduler.addRule(this, currentRule, newValue);
+                ServerEventHandler.ruleScheduler.addRule(this, currentRule, newValue);
             }
             return true;
         }
