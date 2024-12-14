@@ -31,7 +31,7 @@ public class CurtainRules {
             validators = LanguageValidator.class,
             suggestions = {"zh_cn", "en_us"}
     )
-    public static String language = "zh_cn";
+    public static String language = "en_us";
 
     public static class ViewDistanceValidator implements IValidator<Integer> {
         @Override

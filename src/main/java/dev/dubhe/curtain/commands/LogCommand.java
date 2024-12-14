@@ -17,7 +17,7 @@ public class LogCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> literalargumentbuilder = literal("log")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandLog))
-                .then(argument("loggerName", StringArgumentType.word())
+                .then(argument("loggerName", StringArgumentType.greedyString())
                         .suggests((context, builder) -> suggest(LoggerManager.getLoggerSet(), builder))
                         .executes(context -> {
                             String loggerName = StringArgumentType.getString(context, "loggerName");
