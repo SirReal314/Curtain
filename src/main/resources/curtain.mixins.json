@@ -41,6 +41,8 @@
     "rules.desert_shrubs.SaplingBlockMixin",
     "rules.empty_shulker_box_stack_always.ItemStackMixin",
     "rules.farmland_trampled_disabled.FarmBlockMixin",
+    "rules.instant_block_updater_reintroduced.LevelMixin",
+    "rules.instant_block_updater_reintroduced.LevelAccessor",
     "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
     "rules.optimized_tnt.ExplosionMixin",
     "rules.quick_leaf_decay.LeavesBlockMixin",

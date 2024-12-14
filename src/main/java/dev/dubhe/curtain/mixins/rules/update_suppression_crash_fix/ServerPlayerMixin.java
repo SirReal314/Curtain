@@ -3,7 +3,7 @@ package dev.dubhe.curtain.mixins.rules.update_suppression_crash_fix;
 import com.mojang.authlib.GameProfile;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.utils.Messenger;
-import dev.dubhe.curtain.utils.ThrowableSuppression;
+import dev.dubhe.curtain.helpers.rule.update_suppression_crash_fix.ThrowableSuppression;
 import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

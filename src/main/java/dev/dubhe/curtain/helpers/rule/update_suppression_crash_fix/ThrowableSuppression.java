@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.utils;
+package dev.dubhe.curtain.helpers.rule.update_suppression_crash_fix;
 
 import net.minecraft.core.BlockPos;
 

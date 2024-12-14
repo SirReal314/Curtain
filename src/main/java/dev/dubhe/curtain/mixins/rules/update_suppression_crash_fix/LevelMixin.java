@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.mixins.rules.update_suppression_crash_fix;
 
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.utils.ThrowableSuppression;
+import dev.dubhe.curtain.helpers.rule.update_suppression_crash_fix.ThrowableSuppression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
