@@ -159,5 +159,8 @@
   "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast",
 
   "curtain.rules.better_sign_editing.name": "Better Sign Editing",
-  "curtain.rules.better_sign_editing.desc": "Possible to use feather editing sign with \"pen\" in the name"
+  "curtain.rules.better_sign_editing.desc": "Possible to use feather editing sign with \"pen\" in the name",
+
+  "curtain.rules.update_suppression_crash_fix": "Update Suppression Crash Fix",
+  "curtain.rules.better_sign_editing.desc": "Fixes update suppression causing server crashes."
 }
