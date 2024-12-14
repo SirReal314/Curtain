@@ -167,6 +167,6 @@
   "curtain.rules.update_suppression_crash_fix.name": "Update Suppression Crash Fix",
   "curtain.rules.update_suppression_crash_fix.desc": "Fixes update suppression causing server crashes.",
 
-  "curtain.rules.instant_block_updater_reintroduced.name": "Reintroduce Instant Block Updates",
-  "curtain.rules.instant_block_updater_reintroduced.desc": "Re-introduces instant block updates which changed in 22w11a."
+  "curtain.rules.re_introduce_instant_block_updates.name": "Reintroduce Instant Block Updates",
+  "curtain.rules.re_introduce_instant_block_updates.desc": "Re-introduces instant block updates which changed in 22w11a."
 }
