@@ -23,19 +23,15 @@ public abstract class LevelMixin implements NeighborUpdaterChangeableLevel
     private boolean usingInstantNeighborUpdater$CM = false;
 
     @Override
-    public void setUseInstantNeighborUpdater$CM(boolean useInstant)
-    {
-        if (useInstant == this.usingInstantNeighborUpdater$CM)
-        {
+    public void setUseInstantNeighborUpdater$CM(boolean useInstant) {
+        if (useInstant == this.usingInstantNeighborUpdater$CM) {
             return;
         }
-        if (useInstant)
-        {
+        if (useInstant) {
             this.previousNeighborUpdater$CM = this.neighborUpdater;
             this.neighborUpdater = new InstantNeighborUpdater((Level)(Object)this);
         }
-        else
-        {
+        else {
             this.neighborUpdater = Objects.requireNonNull(this.previousNeighborUpdater$CM);
             this.previousNeighborUpdater$CM = null;
         }

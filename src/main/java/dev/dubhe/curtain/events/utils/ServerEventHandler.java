@@ -16,7 +16,7 @@ public class ServerEventHandler {
     public static MinecraftServer minecraftServer;
     private int timer = 0;
     public static boolean areWorldsLoaded = false;
-    public static RuleScheduler ruleScheduler;
+    public static RuleScheduler ruleScheduler = new RuleScheduler();
 
     @SubscribeEvent
     public void onServerStart(ServerStartedEvent event) {
