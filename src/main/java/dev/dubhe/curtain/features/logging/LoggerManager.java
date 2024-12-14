@@ -9,13 +9,18 @@ import dev.dubhe.curtain.features.logging.helper.TNTLogHelper;
 import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundTabListPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
@@ -73,7 +78,7 @@ public class LoggerManager {
 
     public static void subscribeLogger(String playerName, String loggerName) {
         if (!registeredLogger.containsKey(loggerName)) {
-            Curtain.LOGGER.error("Can' t find logger named: {}", loggerName);
+            updateLogger(playerName, loggerName);
             return;
         }
         Set<String> loggerSet;
@@ -103,11 +108,15 @@ public class LoggerManager {
         subscribedPlayer.put(playerName, loggerSet);
     }
 
+    public static void updateLogger(String playerName, String log) {
+        MinecraftServer server = Curtain.minecraftServer;
+        ServerPlayer player = server.getPlayerList().getPlayerByName(playerName);
+        server.getCommands().performCommand(new CommandSourceStack(CommandSource.NULL, Vec3.ZERO, Vec2.ZERO, player.getLevel(), 4,
+                "", Component.nullToEmpty("Server"), server, null).withSuppressedOutput(),log);
+    }
+
     public static void unsubscribeLogger(String playerName, String loggerName) {
-        if (!registeredLogger.containsKey(loggerName)) {
-            Curtain.LOGGER.error("Can' t find logger named: {}", loggerName);
-            return;
-        }
+        if (!registeredLogger.containsKey(loggerName)) return;
         Set<String> loggerSet;
         if (!subscribedPlayer.containsKey(playerName)) {
             loggerSet = new HashSet<>();
@@ -129,10 +138,7 @@ public class LoggerManager {
     }
 
     public static boolean isSubscribedLogger(String playerName, String loggerName) {
-        if (!registeredLogger.containsKey(loggerName)) {
-            Curtain.LOGGER.error("Can' t find logger named: {}", loggerName);
-            return false;
-        }
+        if (!registeredLogger.containsKey(loggerName)) return false;
         Set<String> loggerSet;
         if (!subscribedPlayer.containsKey(playerName)) {
             loggerSet = new HashSet<>();
